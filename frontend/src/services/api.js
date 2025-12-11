@@ -15,6 +15,7 @@ export const endpoints = {
     categorize: '/categorize',
     getTransactions: '/transactions',
     addTransaction: '/transactions',
+    chat: '/chat',
 };
 
 // Helper function to handle API errors

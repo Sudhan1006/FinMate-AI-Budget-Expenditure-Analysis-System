@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { api } from '../services/api'; // We'll add a chat endpoint later
+import { api, endpoints } from '../services/api';
 import { Send, Bot, User } from 'lucide-react';
 
 const Chatbot = () => {
@@ -28,22 +28,18 @@ const Chatbot = () => {
         setLoading(true);
 
         try {
-            // Temporary: echo response or mock until backend is ready
-            // Real implementation would call api.post('/chat', { query: input })
-
-            // Mocking delay
-            setTimeout(() => {
-                const aiMsg = {
-                    role: 'assistant',
-                    content: `I noticed you asked: "${userMsg.content}". (To make me real, please configure the Gemini API key in the backend!)`
-                };
-                setMessages(prev => [...prev, aiMsg]);
-                setLoading(false);
-            }, 1000);
-
+            // Send last 10 messages of history along with the new user turn
+            const history = [...messages, userMsg].slice(-10);
+            const res = await api.post(endpoints.chat, { query: userMsg.content, history });
+            const aiMsg = {
+                role: 'assistant',
+                content: res.data?.response || "I'm having trouble responding right now."
+            };
+            setMessages(prev => [...prev, aiMsg]);
         } catch (err) {
             console.error("Chat Error", err);
             setMessages(prev => [...prev, { role: 'assistant', content: "Sorry, I'm having trouble connecting right now." }]);
+        } finally {
             setLoading(false);
         }
     };
