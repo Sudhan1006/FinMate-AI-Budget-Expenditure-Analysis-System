@@ -1,0 +1,12 @@
+**/__pycache__
+**/*.pyc
+**/.pytest_cache
+**/.mypy_cache
+node_modules
+frontend-react/node_modules
+frontend-react/dist
+backend/venv
+.git
+.gitignore
+.DS_Store
+

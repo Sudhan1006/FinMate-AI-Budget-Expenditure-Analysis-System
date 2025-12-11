@@ -1,6 +1,9 @@
 fastapi
 uvicorn
 pandas
-numpy
-scikit-learn
+# Pin to the version used to train the bundled pickle files
+numpy==1.24.4
+scikit-learn==1.1.2
 pydantic
+google-generativeai
+python-dotenv
